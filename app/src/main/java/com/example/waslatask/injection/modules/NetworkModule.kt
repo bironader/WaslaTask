@@ -1,7 +1,7 @@
 package com.example.waslatask.injection.modules
 
 import android.app.Application
-import com.facebook.stetho.okhttp3.BuildConfig
+import com.example.waslatask.BuildConfig
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -24,13 +24,13 @@ abstract class NetworkModule {
     @Module
     companion object {
         private val baseUrl: String
-            get() = BuildConfig.APPLICATION_ID
+            get() = BuildConfig.GoogleSuggestUrl
 
         @Provides
         @Singleton
         fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(baseUrl    )
+                .baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(provideGson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
