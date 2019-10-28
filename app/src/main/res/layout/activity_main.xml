@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="mainViewModel"
             type="com.example.waslatask.features.main.MainViewModel" />
@@ -21,16 +23,26 @@
             android:id="@+id/autoCompleteResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:visibility="@{mainViewModel.connectionStatus ? View.VISIBLE : View.GONE}" />
 
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:drawableTop="@drawable/ic_no_data"-->
-<!--            android:gravity="center"-->
-<!--            android:text="aSdsd" />-->
+        <FrameLayout
+            android:id="@+id/error_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="@{mainViewModel.connectionStatus ? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/ic_cloud_off"
+                android:text="@string/no_connection_available"
+                android:textColor="@android:color/black" />
+
+        </FrameLayout>
     </LinearLayout>
 
 </layout>

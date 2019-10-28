@@ -4,7 +4,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.databinding.DataBindingUtil
@@ -20,7 +20,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener{
+class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener, QueriesAdapter.ClickListener {
+
 
 
     @Inject
@@ -47,6 +48,8 @@ class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener{
             adapter.setList(result)
             adapter.notifyDataSetChanged()
         })
+
+//        mainViewModel.getConnectionStatus().observe(this, Observer { })
         populateRecyclerView()
 
     }
@@ -70,7 +73,13 @@ class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener{
         return true
     }
 
+    override fun onClickListener(query: String) {
+        openBrowser(query)
+        Toast.makeText(this,"clicked",Toast.LENGTH_LONG)
+    }
+
     private fun populateRecyclerView() {
+        adapter.setClickListener(this)
         autoCompleteList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         autoCompleteList.setHasFixedSize(true)

@@ -3,6 +3,7 @@ package com.example.waslatask.features.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.blankj.utilcode.util.NetworkUtils
 import com.example.waslatask.data.remote.QueriesApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,18 +17,24 @@ class MainViewModel @Inject constructor() : ViewModel() {
     lateinit var queriesApi: QueriesApi
     private var disposable: CompositeDisposable? = null
     private val suggestedItems = MutableLiveData<List<String>>()
+    private val isConnected = MutableLiveData<Boolean>()
 
     init {
         disposable = CompositeDisposable()
+        isConnected.value = true
     }
 
     fun makeRequest(queryToSearch: String) {
-        disposable?.add(
-            queriesApi.getQuires(query = queryToSearch)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onSuccess, this::onError)
-        )
+        if (isConnected()) {
+            disposable?.add(
+                queriesApi.getQuires(query = queryToSearch)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onSuccess, this::onError)
+            )
+            isConnected.value = true
+        } else
+            isConnected.value = false
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -41,6 +48,10 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun getsSuggestedItems(): LiveData<List<String>> = this.suggestedItems
+    fun getConnectionStatus(): LiveData<Boolean> = this.isConnected
 
+    private fun isConnected(): Boolean {
+        return NetworkUtils.isConnected()
+    }
 
 }
