@@ -6,7 +6,6 @@
 - [Gson](https://github.com/google/gson)
 - [Dagger 2](http://google.github.io/dagger/)
 - [Android DataBinding Library](https://developer.android.com/topic/libraries/data-binding)
-- [Google Play Services](https://developers.google.com/android/guides/overview)
 - [Timber](https://github.com/JakeWharton/timber)
 - [Glide 3](https://github.com/bumptech/glide)
 - [Stetho](http://facebook.github.io/stetho/)
