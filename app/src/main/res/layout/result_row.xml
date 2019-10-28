@@ -20,6 +20,7 @@
         android:animateLayoutChanges="true"
         android:clickable="true"
         android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
         android:onClick="@{()->clickListener.onClickListener(text)}"
         android:orientation="vertical">
 

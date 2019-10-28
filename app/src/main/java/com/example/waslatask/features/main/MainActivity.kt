@@ -75,7 +75,6 @@ class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener, QueriesAdap
 
     override fun onClickListener(query: String) {
         openBrowser(query)
-        Toast.makeText(this,"clicked",Toast.LENGTH_LONG)
     }
 
     private fun populateRecyclerView() {
