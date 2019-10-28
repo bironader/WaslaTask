@@ -9,16 +9,14 @@ import javax.inject.Singleton
 
 
 @Module
-abstract class ContextModule {
+class ContextModule {
 
-    @Module
-    companion object {
-        @Singleton
-        @Provides
-        @NonNull
-        fun provideContext(application: Application): Context {
-            return application.applicationContext
-        }
+    @Singleton
+    @Provides
+    @NonNull
+    fun provideContext(application: Application): Context {
+        return application.applicationContext
     }
+
 
 }
