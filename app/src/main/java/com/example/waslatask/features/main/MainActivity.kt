@@ -1,7 +1,10 @@
 package com.example.waslatask.features.main
 
+import android.app.SearchManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.databinding.DataBindingUtil
@@ -16,7 +19,8 @@ import com.example.waslatask.features.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener {
+
+class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener{
 
 
     @Inject
@@ -56,8 +60,9 @@ class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener {
         return true
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
+    override fun onQueryTextSubmit(query: String): Boolean {
+        openBrowser(query)
+        return false
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
@@ -71,6 +76,12 @@ class MainActivity : DaggerAppCompatActivity(), OnQueryTextListener {
         autoCompleteList.setHasFixedSize(true)
         autoCompleteList.adapter = adapter
 
+    }
+
+    private fun openBrowser(query: String) {
+        val intent = Intent(Intent.ACTION_WEB_SEARCH)
+        intent.putExtra(SearchManager.QUERY, query)
+        startActivity(intent)
     }
 
 }
